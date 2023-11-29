@@ -1,0 +1,319 @@
+import java.awt.desktop.SystemEventListener;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class Main {
+
+    private Map<String, String> userCredentials;
+    private Map<String, Double> userBalances;
+    private Map<String, String> simCompanies;
+
+    public Main() {
+        this.userCredentials = new HashMap<>();
+        this.userBalances = new HashMap<>();
+        this.simCompanies = new HashMap<>();
+        //initializeSimCompanies();
+    }
+
+    private void initializeSimCompanies() {
+        // Initialize mobile sim companies
+        clearConsole();
+        System.out.println("=========================================");
+        System.out.println("|          Sim Information Page:        |");
+        System.out.println("=========================================");
+        simCompanies.put("1", "Robi");
+        simCompanies.put("2", "Airtel");
+        simCompanies.put("3", "Banglalink");
+        simCompanies.put("4", "Teletalk");
+    }
+
+    public void registerUser(String username, String password) {
+        if (!userCredentials.containsKey(username)) {
+            userCredentials.put(username, password);
+            userBalances.put(username, 0.0);
+            System.out.println("");
+            System.out.println("User " + username + " registered successfully.");
+            System.out.println("");
+        } else {
+            System.out.println("");
+            System.out.println("Username " + username + " already exists.");
+            System.out.println("");
+        }
+    }
+
+    public boolean loginUser(String username, String password) {
+        return userCredentials.containsKey(username) && userCredentials.get(username).equals(password);
+    }
+
+    public void showWelcomePage() {
+        clearConsole();
+        System.out.println("================================================");
+        System.out.println("|      Welcome to Pragati Payment System!      |");
+        System.out.println("================================================");
+        System.out.println("");
+        System.out.println("Options:");
+        System.out.println("1. Log In");
+        System.out.println("2. Register");
+        System.out.println("3. Exit");
+    }
+
+    public void showCarrierInfoPage(String username) {
+        clearConsole();
+        System.out.println("Welcome, " + username + "!          ");
+        System.out.println("================================================");
+        System.out.println("|          Carrier Information Page:           |");
+        System.out.println("================================================");
+        System.out.println("");
+        System.out.println("1. Send Money");
+        System.out.println("2. Mobile Recharge");
+        System.out.println("3. Payment");
+        System.out.println("4. Cash Out");
+        System.out.println("5. Download App");
+        System.out.println("6. Help Line");
+        System.out.println("7. Log Out");
+    }
+
+    public void processOptions(String username, int option) {
+        Scanner scanner = new Scanner(System.in);
+
+        switch (option) {
+            case 1:
+                sendMoneyOption(username, scanner);
+                break;
+            case 2:
+                mobileRechargeOption(username, scanner);
+                break;
+            case 3:
+                paymentOption(username, scanner);
+                break;
+            case 4:
+                cashOutOption(username, scanner);
+                break;
+            case 5:
+                System.out.println("");
+                System.out.println("Downloading Pragati App: www.pragati_money_transfer.com");
+                System.out.println("");
+                break;
+            case 6:
+                System.out.println("");
+                System.out.println("Contact our help line at 1234567890.");
+                System.out.println("");
+                break;
+            case 7:
+                System.out.println("");
+                System.out.println("Logging out. Goodbye, " + username + "!");
+                System.out.println("");
+                break;
+            default:
+                System.out.println("");
+                System.out.println("Invalid option. Please try again.");
+                System.out.println("");
+        }
+    }
+
+    private void sendMoneyOption(String username, Scanner scanner) {
+        clearConsole();
+        System.out.println("Welcome, " + username + "!          ");
+        System.out.println("================================================");
+        System.out.println("|              Send Money Option:              |");
+        System.out.println("================================================");
+        System.out.println("");
+        System.out.print("Enter receiver phone number: ");
+        String receiverPhoneNumber = scanner.nextLine();
+        System.out.print("Enter amount: $");
+        double amount = scanner.nextDouble();
+        scanner.nextLine();
+        System.out.print("Enter reference code: ");
+        String referenceCode = scanner.nextLine();
+        System.out.print("Enter PIN number: ");
+        String pinNumber = scanner.nextLine();
+
+
+        System.out.println("");
+
+        System.out.println("================================================");
+        System.out.println("|           Send Money Information:            |");
+        System.out.println("================================================");
+        System.out.println("");
+        System.out.println("Sender: " + username);
+        System.out.println("Receiver: " + receiverPhoneNumber);
+        System.out.println("Amount: $" + amount);
+        System.out.println("Reference Code: " + referenceCode);
+        System.out.println("PIN: " + pinNumber);
+        System.out.println("");
+        System.out.println("Money Send Done Successfully !");
+    }
+
+    private void mobileRechargeOption(String username, Scanner scanner) {
+        //clearConsole();
+       // System.out.println("================================================");
+       // System.out.println("|           Mobile Recharge Option:            |");
+       // System.out.println("================================================");
+       //
+        // System.out.println("");
+        initializeSimCompanies();
+
+        // Show sim company options
+        System.out.println("Select Mobile Sim Company:");
+        for (Map.Entry<String, String> entry : simCompanies.entrySet()) {
+            System.out.println(entry.getKey() + ". " + entry.getValue());
+        }
+
+        System.out.print("Enter your choice: ");
+        String simCompanyChoice = scanner.nextLine();
+
+        if (simCompanies.containsKey(simCompanyChoice)) {
+            String simCompany = simCompanies.get(simCompanyChoice);
+            System.out.print("Enter phone number: ");
+            String phoneNumber = scanner.nextLine();
+            System.out.print("Enter amount: $");
+            double amount = scanner.nextDouble();
+            scanner.nextLine();
+            System.out.print("Enter reference code: ");
+            String referenceCode = scanner.nextLine();
+            System.out.print("Enter PIN number: ");
+            String pinNumber = scanner.nextLine();
+
+
+            System.out.println("");
+            System.out.println("================================================");
+            System.out.println("|           Mobile Recharge Information:       |");
+            System.out.println("================================================");
+            System.out.println("");
+            System.out.println("User: " + username);
+            System.out.println("Mobile Sim Company: " + simCompany);
+            System.out.println("Phone Number: " + phoneNumber);
+            System.out.println("Amount: $" + amount);
+            System.out.println("Reference Code: " + referenceCode);
+            System.out.println("PIN: " + pinNumber);
+            System.out.println("");
+            System.out.println("Mobile Recharge Done Successfully !");
+        } else {
+            System.out.println("Invalid sim company choice.");
+        }
+    }
+
+    private void paymentOption(String username, Scanner scanner) {
+        clearConsole();
+        System.out.println("================================================");
+        System.out.println("|                Payment Option:               |");
+        System.out.println("================================================");
+        System.out.println("");
+        System.out.print("Enter phone number: ");
+        String phoneNumber = scanner.nextLine();
+        System.out.print("Enter amount: $");
+        double amount = scanner.nextDouble();
+        scanner.nextLine(); // Consume the newline character
+        System.out.print("Enter reference code: ");
+        String referenceCode = scanner.nextLine();
+        System.out.print("Enter PIN number: ");
+        String pinNumber = scanner.nextLine();
+
+
+        System.out.println("");
+        System.out.println("================================================");
+        System.out.println("|               Payment Information:           |");
+        System.out.println("================================================");
+        System.out.println("");
+        System.out.println("User: " + username);
+        System.out.println("Phone Number: " + phoneNumber);
+        System.out.println("Amount: $" + amount);
+        System.out.println("Reference Code: " + referenceCode);
+        System.out.println("PIN: " + pinNumber);
+        System.out.println("");
+        System.out.println("Payment Done Successfully !");
+    }
+
+    private void cashOutOption(String username, Scanner scanner) {
+        clearConsole();
+        System.out.println("================================================");
+        System.out.println("|                Cash Out Option:              |");
+        System.out.println("================================================");
+        System.out.println("");
+        System.out.print("Enter phone number: ");
+        String phoneNumber = scanner.nextLine();
+        System.out.print("Enter amount: $");
+        double amount = scanner.nextDouble();
+        scanner.nextLine();
+        System.out.print("Enter reference code: ");
+        String referenceCode = scanner.nextLine();
+        System.out.print("Enter PIN number: ");
+        String pinNumber = scanner.nextLine();
+
+        System.out.println("");
+        System.out.println("================================================");
+        System.out.println("|               Cash Out Information:          |");
+        System.out.println("================================================");
+        System.out.println("");
+        System.out.println("User: " + username);
+        System.out.println("Phone Number: " + phoneNumber);
+        System.out.println("Amount: $" + amount);
+        System.out.println("Reference Code: " + referenceCode);
+        System.out.println("PIN: " + pinNumber);
+        System.out.println("");
+        System.out.println("Cash Out money Successfully !");
+    }
+
+    private void clearConsole() {
+        for(int i=0; i<5; i++){
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] args) {
+        Main paymentSystem = new Main();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            paymentSystem.showWelcomePage();
+            System.out.print("Select an option: ");
+            int welcomeOption = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (welcomeOption) {
+                case 1:
+                    paymentSystem.clearConsole();
+                    System.out.println("====================");
+                    System.out.println("|      Log in      |");
+                    System.out.println("====================");
+                    System.out.println("");
+                    System.out.print("Enter username: ");
+                    String loginUsername = scanner.nextLine();
+                    System.out.print("Enter password: ");
+                    String loginPassword = scanner.nextLine();
+                    if (paymentSystem.loginUser(loginUsername, loginPassword)) {
+                        // Successful login
+                        int carrierInfoOption = 0;
+                        do {
+                            paymentSystem.showCarrierInfoPage(loginUsername);
+                            System.out.print("Select an option: ");
+                            carrierInfoOption = scanner.nextInt();
+                            scanner.nextLine();
+                            paymentSystem.processOptions(loginUsername, carrierInfoOption);
+                        } while (carrierInfoOption != 7);
+                    } else {
+                        System.out.println("Login failed. Invalid credentials.");
+                    }
+                    break;
+                case 2:
+                    paymentSystem.clearConsole();
+                    System.out.println("====================");
+                    System.out.println("|     Register     |");
+                    System.out.println("====================");
+                    System.out.println("");
+                    System.out.print("Enter username: ");
+                    String registerUsername = scanner.nextLine();
+                    System.out.print("Enter password: ");
+                    String registerPassword = scanner.nextLine();
+                    paymentSystem.registerUser(registerUsername, registerPassword);
+                    break;
+                case 3:
+                    System.out.println("Exiting Pragati Payment System. Goodbye!");
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+}
